@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor() {
       super()
       this.state = {
-          messages: []
+        messages: []
       }
       this.sendMessage = this.sendMessage.bind(this)
   } 
@@ -16,18 +16,19 @@ class App extends React.Component {
     const chatManager = new Chatkit.chatManager({
       instanceLocator: instanceLocator,
       userId: username,
-      tokenProvider: new Chatkit.tokenProvider({
+      tokenProvider: new Chatkit.TokenProvider({
         url: testToken
       })
     })
 
     chatManager.connect().then(currentUser => {
-      currentUser.subscribeToRoom({
+        this.currentUser = currentUser
+        this.currentUser.subscribeToRoom({
         roomId: roomId,
         hooks: {
           onNewMessage: message => {
             this.setState({
-              messages: [...this.state.messages, message]
+                messages: [...this.state.messages, message]
             })
           }
         }
@@ -46,10 +47,13 @@ class App extends React.Component {
     return (
       <div className="app">
         <Title />
-        <MessageList messages={this.state.messages} />
-        <SendMessageForm sendMessage={this.sendMessage} />
+        <MessageList 
+            roomId={this.state.roomId}
+            messages={this.state.messages} />
+        <SendMessageForm
+            sendMessage={this.sendMessage} />
       </div>
-    )
+    );
   }
 }
 
@@ -57,9 +61,9 @@ class MessageList extends React.Component {
   render() {
     return (
       <ul className="message-list">
-        {this.props.messages.map(message => {
+        {this.props.messages.map((message, index) => {
           return (
-            <li key={message.id}>
+            <li key={message.id} className="message" >
               <div>
                 {message.senderId}
               </div>
