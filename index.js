@@ -13,7 +13,7 @@ class App extends React.Component {
   } 
 
   componentDidMount() {
-    const chatManager = new Chatkit.chatManager({
+    const chatManager = new Chatkit.ChatManager({
       instanceLocator: instanceLocator,
       userId: username,
       tokenProvider: new Chatkit.TokenProvider({
