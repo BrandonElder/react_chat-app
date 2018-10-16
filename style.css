@@ -17,6 +17,9 @@ html, body {
 
 #root {
   height: 100%;
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid lightslategray;
 }
 
 .app {
